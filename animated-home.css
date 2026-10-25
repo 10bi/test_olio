@@ -1,0 +1,259 @@
+/* ========= OLIO THEME COLORS ========= */
+  :root {
+    --olio-navy: #0a192f;
+    --olio-cyan: #00d2ff;
+    --olio-blue: #0066ff;
+    --olio-text: #e6f1ff;
+    --olio-glass: rgba(10, 25, 47, 0.85);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { overflow:hidden; font-family:'Segoe UI',sans-serif; background:var(--olio-navy); touch-action:none; }
+  canvas { display:block; }
+
+  /* ========= HEADER ========= */
+  header {
+    position: fixed; top:0; left:0; width:100%;
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: transparent;
+    color: white; z-index: 10;
+  }
+  header h1 { 
+    font-size: 20px; letter-spacing: 2px; font-weight: 800; 
+    display: flex; align-items: center; gap: 8px;
+  }
+  /* Simulated OLIO logo text */
+  header h1 .logo-icon {
+    background: linear-gradient(135deg, var(--olio-blue), var(--olio-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 24px;
+  }
+  header h1 .logo-text { color: var(--olio-text); }
+  header h1 .logo-sub { font-size: 10px; color: var(--olio-cyan); letter-spacing: 4px; font-weight: 400; margin-left: 5px;}
+
+  /* ========= APPLY BUTTON ========= */
+  .apply-btn {
+    background: linear-gradient(135deg, #000, #222);
+    color: #fff;
+    border: none;
+    padding: 5px 14px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #fff;
+  }
+  .apply-btn:hover { 
+    transform: scale(1.05); 
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.8);
+  }
+
+  /* ========= HINT TEXT ========= */
+  .hint {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--olio-glass);
+    color: var(--olio-text); padding: 10px 20px;
+    border-radius: 30px; font-size: 12px;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    z-index: 10;
+    text-align: center;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ========= CROSSHAIR ========= */
+  .crosshair {
+    position: fixed; top:50%; left:50%;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(0, 210, 255, 0.8);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 5;
+    display: none;
+    transition: all 0.15s;
+  }
+  .crosshair.show { display: block; }
+  .crosshair.active {
+    width: 22px; height: 22px;
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.2);
+  }
+
+  /* ========= BACK BUTTON ========= */
+  .back-btn {
+    position: fixed; top: 70px; left: 24px;
+    background: var(--olio-glass);
+    color: var(--olio-cyan); border: 1px solid var(--olio-cyan);
+    padding: 10px 20px; border-radius: 8px;
+    font-size: 13px; cursor: pointer;
+    z-index: 20; display: none;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: var(--olio-cyan); color: var(--olio-navy); }
+  .back-btn.show { display: block; }
+
+  /* ========= LOADING OVERLAY WITH DESCRIPTION ========= */
+  .loading-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10, 25, 47, 0.98);
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    z-index: 50;
+    color: var(--olio-text);
+    padding: 20px;
+    text-align: center;
+  }
+  .loading-overlay.show { display: flex; }
+  
+  .spinner {
+    width: 60px; height: 60px;
+    border: 3px solid rgba(0, 210, 255, 0.1);
+    border-top-color: var(--olio-cyan);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 25px;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-title {
+    font-size: 22px; font-weight: 700; letter-spacing: 2px;
+    color: #fff; margin-bottom: 15px;
+    text-shadow: 0 0 20px var(--olio-cyan);
+  }
+  .loading-desc {
+    font-size: 14px; line-height: 1.6; max-width: 500px;
+    color: #a0b4c8;
+  }
+  .loading-desc strong { color: var(--olio-cyan); }
+
+  /* ========= IFRAME MODAL ========= */
+  .iframe-modal {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .iframe-modal.show { display: flex; }
+
+  .iframe-container {
+    position: relative;
+    width: 90vw; height: 85vh;
+    max-width: 1400px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(0, 210, 255, 0.2);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+  }
+  .iframe-container iframe { width: 100%; height: 100%; border: none; }
+
+  .iframe-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 44px; height: 44px;
+    background: #ff3b30;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  /* ========= UTILS ========= */
+  #fps {
+    position:fixed; top:70px; right:20px;
+    color:var(--olio-cyan); font-size:11px; font-family:monospace;
+    background:rgba(10, 25, 47, 0.7); padding:4px 10px;
+    border-radius:6px; z-index:10;
+    border: 1px solid rgba(0, 210, 255, 0.2);
+  }
+
+  .toast {
+    position: fixed; bottom: 70px; left: 50%;
+    transform: translateX(-50%);
+    background: #ff3b30;
+    color: #fff; padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    z-index: 15;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  }
+  .toast.show { display: block; animation: slideUp 0.3s; }
+  @keyframes slideUp { from { transform: translate(-50%, 20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+  /* ========= MOBILE CONTROLS ========= */
+  #mobileControls { display: none; }
+  body.is-mobile #mobileControls { display: block; }
+
+  .look-pad {
+    position: fixed; top: 70px; right: 0;
+    width: 50%; height: calc(100% - 70px);
+    z-index: 6;
+  }
+
+  .joystick-zone {
+    position: fixed; bottom: 40px; left: 30px;
+    width: 140px; height: 140px;
+    z-index: 20;
+    border-radius: 50%;
+    background: rgba(10, 25, 47, 0.5);
+    border: 2px solid rgba(0, 210, 255, 0.3);
+    touch-action: none;
+    backdrop-filter: blur(5px);
+  }
+  .joystick-stick {
+    position: absolute; top: 50%; left: 50%;
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, var(--olio-blue), var(--olio-cyan));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    pointer-events: none;
+  }
+  .joystick-label {
+    position: absolute; bottom: -25px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--olio-cyan);
+    font-size: 11px; white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .tap-hint {
+    position: fixed; top: 80px; right: 20px;
+    background: rgba(10, 25, 47, 0.8);
+    color: var(--olio-cyan);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    z-index: 15;
+    display: none;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+  }
+  body.is-mobile .tap-hint { display: block; }
+
+  @media (max-width: 768px) {
+    header { padding: 10px 16px; }
+    header h1 { font-size: 16px; }
+    .apply-btn { padding: 8px 16px; font-size: 12px; }
+    .hint { font-size: 10px; padding: 8px 16px; max-width: 90vw; }
+    .back-btn { padding: 8px 14px; font-size: 12px; top: 60px; left: 15px; }
+    #fps { top: 60px; right: 15px; }
+    .iframe-container { width: 96vw; height: 80vh; }
+    .loading-desc { font-size: 12px; padding: 0 15px; }
+  }
