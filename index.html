@@ -848,26 +848,37 @@ function addStreetLamps() {
 addStreetLamps();
 
 /* ============ FETCH USERS (100 from API) ============ */
+/* ============ FETCH REAL OLIO APPLICANTS ============ */
 async function loadUsers() {
   try {
-    const res = await fetch(
-      'https://randomuser.me/api/?results=100&seed=olio2026&nat=us,gb,ca,au,nz'
-    );
-    const data = await res.json();
-    return data.results.map((u, i) => ({
-      id: i,
-      name: `${u.name.first} ${u.name.last}`.toUpperCase(),
-      site: 'https://example.com',
-      picture: u.picture.large
+    const response = await fetch('https://olio.my/applications', {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success !== true || !Array.isArray(data.applications)) {
+      throw new Error('Invalid OLIO API response');
+    }
+
+    return data.applications.map(application => ({
+      id: application.id,
+      name: String(application.full_name || 'Unknown Applicant').trim().toUpperCase(),
+      job: application.job || '',
+      site: `https://olio.my/application?id=${application.id}`,
+      picture: application.profile_image_url || null
     }));
-  } catch (e) {
-    console.warn('API failed, using fallback:', e);
-    return Array.from({ length: 100 }, (_, i) => ({
-      id: i,
-      name: `USER ${String(i + 1).padStart(3, '0')}`,
-      site: 'https://example.com',
-      picture: null
-    }));
+  } catch (error) {
+    console.error('Failed to load OLIO applicants:', error);
+    showToast('Unable to load real applicants. Please refresh.');
+    return [];
   }
 }
 
